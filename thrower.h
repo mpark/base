@@ -12,6 +12,9 @@
 
 #include <Base/code_location.h>
 
+/* Use this macro to throw an exception, and stream some error message. */
+#define THROW(exception) ::Base::TThrower<exception>(HERE)
+
 namespace Base {
 
   /* A class which throws TError after streaming a formatted error message. */
