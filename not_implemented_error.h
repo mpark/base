@@ -9,11 +9,10 @@ namespace Base {
 
   /* Throw this exception when something isn't implemented yet.
 
-     For example,
+     For example, using <Base/thrower.h>:
 
-     Base::TThrower<Base::TNotImplementedError>(HERE)
-     << __func__ << " is not implemented.";
-     */
+       THROW(Base::TNotImplementedError) << __func__ << " is not implemented.";
+  */
   class TNotImplementedError : public std::runtime_error {
     public:
 
