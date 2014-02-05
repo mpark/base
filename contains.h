@@ -30,13 +30,17 @@
 
 #pragma once
 
-template <typename TContainer, typename TVal>
-auto Contains(const TContainer &container, const TVal &val)
-    DECLTYPE_AUTO(container.find(val) != std::end(container));
+namespace Base {
 
-template <typename TContainer, typename TVal>
-auto Contains(const TContainer &container, const TVal &val)
-    DECLTYPE_AUTO(std::find(std::begin(container),
-                            std::end(container),
-                            val));
+  template <typename TContainer, typename TVal>
+  auto Contains(const TContainer &container, const TVal &val)
+      DECLTYPE_AUTO(container.find(val) != std::end(container));
+
+  template <typename TContainer, typename TVal>
+  auto Contains(const TContainer &container, const TVal &val)
+      DECLTYPE_AUTO(std::find(std::begin(container),
+                              std::end(container),
+                              val));
+
+}  // namespace Base
 
