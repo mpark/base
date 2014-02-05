@@ -1,6 +1,5 @@
 #include <Base/contains.h>
 
-#include <algorithm>
 #include <map>
 #include <set>
 
@@ -35,3 +34,11 @@ TEST(Contains, VectorInt) {
   EXPECT_TRUE(Base::Contains(x, "world"));
   EXPECT_FALSE(Base::Contains(x, "not here"));
 }
+
+TEST(Contains, Compatible) {
+  const char *x[] = {"hello", "world"};
+  EXPECT_TRUE(Base::Contains(x, std::string("hello")));
+  EXPECT_TRUE(Base::Contains(x, std::string("world")));
+  EXPECT_FALSE(Base::Contains(x, std::string("not here")));
+}
+
