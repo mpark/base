@@ -25,13 +25,13 @@
 
    */
 
+#pragma once
+
 #include <algorithm>
 #include <iterator>
 
 #include <Std/decltype_auto.h>
 #include <Std/type_traits.h>
-
-#pragma once
 
 namespace Base {
 
