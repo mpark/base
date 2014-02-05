@@ -1,4 +1,5 @@
-/* A utility function to kill the 'container.find(val) != std::end(container)'
+/* A utility function to kill the 'container.find(val) != std::end(container)
+
    pattern. Use this function to check if a container contains some value.
 
    For example,
@@ -24,23 +25,56 @@
 
    */
 
+#include <algorithm>
 #include <iterator>
+#include <map>
+#include <set>
 
 #include <Std/decltype_auto.h>
+#include <Std/type_traits.h>
 
 #pragma once
 
 namespace Base {
 
-  template <typename TContainer, typename TVal>
-  auto Contains(const TContainer &container, const TVal &val)
-      DECLTYPE_AUTO(container.find(val) != std::end(container));
+  /**
+   *   Detect if find exists.
+   **/
 
-  template <typename TContainer, typename TVal>
-  auto Contains(const TContainer &container, const TVal &val)
-      DECLTYPE_AUTO(std::find(std::begin(container),
-                              std::end(container),
-                              val));
+  template <typename TContainer>
+  std::is_same<
+    decltype(std::declval<TContainer>().find(
+            std::declval<typename TContainer::key_type>())),
+    typename TContainer::iterator>
+  HasFindImpl(void *);
+
+  template <typename>
+  std::false_type HasFindImpl(...);
+
+  template <typename TContainer>
+  static constexpr bool HasFind() {
+    return decltype(HasFindImpl<TContainer>(nullptr))::value;
+  }
+
+  /* Use member find if it exists. */
+  template <typename TContainer>
+  std::enable_if_t<HasFind<TContainer>(),
+  bool> Contains(
+      const TContainer &container,
+      const typename TContainer::key_type &key) {
+    return container.find(key) != std::end(container);
+  }
+
+  /* Use std::find if no member find exists. */
+  template <typename TContainer>
+  std::enable_if_t<!HasFind<TContainer>(),
+  bool> Contains(
+      const TContainer &container,
+      const typename TContainer::value_type &val) {
+    return std::find(std::begin(container),
+                     std::end(container),
+                     val) != std::end(container);
+  }
 
 }  // namespace Base
 
