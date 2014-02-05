@@ -41,36 +41,31 @@ namespace Base {
    *   Detect if find exists.
    **/
 
-  template <typename TContainer>
+  template <typename TContainer, typename TElem>
   std::is_same<
-    decltype(std::declval<TContainer>().find(
-            std::declval<typename TContainer::key_type>())),
+    decltype(std::declval<TContainer>().find(std::declval<TElem>())),
     typename TContainer::iterator>
   HasFindImpl(void *);
 
-  template <typename>
+  template <typename, typename>
   std::false_type HasFindImpl(...);
 
-  template <typename TContainer>
+  template <typename TContainer, typename TElem>
   static constexpr bool HasFind() {
-    return decltype(HasFindImpl<TContainer>(nullptr))::value;
+    return decltype(HasFindImpl<TContainer, TElem>(nullptr))::value;
   }
 
   /* Use member find if it exists. */
-  template <typename TContainer>
-  std::enable_if_t<HasFind<TContainer>(),
-  bool> Contains(
-      const TContainer &container,
-      const typename TContainer::key_type &key) {
+  template <typename TContainer, typename TKey>
+  std::enable_if_t<HasFind<TContainer, TKey>(),
+  bool> Contains(const TContainer &container, const TKey &key) {
     return container.find(key) != std::end(container);
   }
 
   /* Use std::find if no member find exists. */
-  template <typename TContainer>
-  std::enable_if_t<!HasFind<TContainer>(),
-  bool> Contains(
-      const TContainer &container,
-      const typename TContainer::value_type &val) {
+  template <typename TContainer, typename TVal>
+  std::enable_if_t<!HasFind<TContainer, TVal>(),
+  bool> Contains(const TContainer &container, const TVal &val) {
     return std::find(std::begin(container),
                      std::end(container),
                      val) != std::end(container);
