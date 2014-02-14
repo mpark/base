@@ -10,3 +10,11 @@ TEST(Split, Typical) {
   }  // for
 }
 
+TEST(Split, Single) {
+  std::string line {"X       \n"};
+  auto tokens = Base::Split(line);
+  for (const auto &token : tokens) {
+    EXPECT_EQ(token, "X");
+  }  // for
+}
+
