@@ -132,12 +132,12 @@ namespace Base {
       if (*this && that) {
         using std::swap;
         swap(IsValid, that.IsValid);
-        swap(*Get(), *that.Get());
+        swap(**this, *that);
       } else if (*this) {
-        that.Construct(**this);
+        that.Construct(std::move(**this));
         Destroy();
       } else if (that) {
-        Construct(*that);
+        Construct(std::move(*that));
         that.Destroy();
       }  // if
       return *this;
