@@ -69,5 +69,12 @@ namespace Base {
                      val) != std::end(container);
   }
 
+  template <typename TContainer, typename TUnaryPred>
+  bool ContainsIf(const TContainer &container, TUnaryPred &&unary_pred) {
+    return std::find_if(std::begin(container),
+                        std::end(container),
+                        std::forward<TUnaryPred>(unary_pred)) != std::end(container);
+  }
+
 }  // namespace Base
 
