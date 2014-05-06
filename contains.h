@@ -29,9 +29,7 @@
 
 #include <algorithm>
 #include <iterator>
-
-#include <Std/decltype_auto.h>
-#include <Std/type_traits.h>
+#include <type_traits>
 
 namespace Base {
 

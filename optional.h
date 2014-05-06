@@ -3,9 +3,8 @@
 #pragma once
 
 #include <cassert>
+#include <type_traits>
 #include <utility>
-
-#include <Std/type_traits.h>
 
 namespace Base {
 
@@ -180,7 +179,7 @@ namespace Base {
     bool IsValid;
 
     /* Aligned storage for TVal. */
-    std::aligned_storage_t<sizeof(TVal), std::alignment_of<TVal>::value> Val;
+    std::aligned_storage_t<sizeof(TVal)> Val;
 
   };  // TOptional
 

@@ -9,7 +9,7 @@ namespace Base {
 
   /* Throw this exception when something isn't implemented yet.
 
-     For example, using <Base/thrower.h>:
+     For example, using <base/thrower.h>:
 
        THROW(Base::TNotImplementedError) << __func__ << " is not implemented.";
   */
